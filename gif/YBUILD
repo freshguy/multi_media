@@ -1,0 +1,131 @@
+# Copyright 2013. Juyou Inc. All rights reserved
+# Author: wangjuntao@juyou.com (Juntao Wang)
+
+cc_library(name = 'nsgif',
+      srcs = [
+      'libnsgif.c',
+      ],
+      deps = [
+      ],
+      cflags = [
+      ],
+      link_flags = [
+      ],
+)
+
+cc_library(name = 'gif_decoder',
+      srcs = [
+      'gif_decoder.cc',
+      ],
+      deps = [
+      ':nsgif',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      ## for Magick++
+      '-fopenmp',
+      '-DMAGICKCORE_HDRI_ENABLE=0',
+      '-DMAGICKCORE_QUANTUM_DEPTH=16',
+      '-I/usr/local/include/ImageMagick-6',
+      ],
+      link_flags = [
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      ## for Magick++
+      '-L/usr/local/lib',
+      '-lMagick++-6.Q16',
+      '-lMagickWand-6.Q16',
+      '-lMagickCore-6.Q16',
+      ],
+)
+
+cc_test(name = 'gif_decoder_unittest',
+      srcs = [
+      'gif_decoder_unittest.cc',
+      ],
+      deps = [
+      ':gif_decoder',
+      '//news_search/base/timer:timer',
+      '//file:file',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      ## for Magick++
+      '-fopenmp',
+      '-DMAGICKCORE_HDRI_ENABLE=0',
+      '-DMAGICKCORE_QUANTUM_DEPTH=16',
+      '-I/usr/local/include/ImageMagick-6',
+      ],
+      link_flags = [
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      ## for Magick++
+      '-L/usr/local/lib',
+      '-lMagick++-6.Q16',
+      '-lMagickWand-6.Q16',
+      '-lMagickCore-6.Q16',
+      ],
+)
+
+cc_binary(name = 'gif_decoder_test',
+      srcs = [
+      'decode_gif.c',
+      ],
+      deps = [
+      ':nsgif',
+      ],
+      cflags = [
+      ],
+      link_flags = [
+      ],
+)
+
+cc_binary(name = 'cimg_test',
+      srcs = [
+      'cimg_test.cc',
+      ],
+      deps = [
+      '//util/global_init:global_init',
+      '//base:base',
+      ],
+      cflags = [
+      #'-Wall',
+      #'-W',
+      '-O',
+      #'-c',
+      '-w',
+      '-O3',
+      '-fPIC',
+      '-ansi',
+      '-pedantic',
+      '-Dcimg_use_vt100',
+      '-I/usr/X11R6/include',
+      ],
+      link_flags = [
+      '-lm',
+      '-L/usr/X11R6/lib',
+      '-lpthread',
+      '-lX11',
+      ],
+)
+
+cc_binary(name = 'invoke_main_fun',
+      srcs = [
+      'invoke_main_fun.cc',
+      ],
+      deps = [
+      '//base:base'
+      ],
+)

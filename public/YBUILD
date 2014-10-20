@@ -1,0 +1,535 @@
+# Copyright 2013. Juyou Inc. All rights reserved
+# Author: wangjuntao@juyou.com (Juntao Wang)
+
+cc_library(name = 'gif_decoder',
+      srcs = [
+      'gif_frame.cc',
+      ],
+      deps = [
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      ],
+      link_flags = [
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      ],
+)
+
+cc_library(name = 'multimedia_transform',
+      srcs = [
+      'multimedia_transform.cc',
+      'unzip.cc',
+      ],
+      deps = [
+      '//juyou/base/base64:ZBase64',
+      '//juyou/circles/public:utility',
+      '//juyou/base/zlib/contrib/minizip:minizip_lib',
+      '//file:file',
+      '//base:base',
+      ],
+      cflags = [
+      '-O',
+      '-c',
+      '-w',
+      '-O3',
+      '-fPIC',
+      '-D_LARGEFILE64_SOURCE=1',
+      '-DHAVE_HIDDEN',
+      '-DPIC',
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      ],
+      link_flags = [
+      '/usr/lib/libfreeimage.so',
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      '-luuid',
+      ],
+)
+
+cc_library(name = 'open_magic_message_handler',
+      srcs = [
+      'open_magic_message_handler.cc',
+      ],
+      deps = [
+      ':multimedia_transform',
+      ':magic_message_control',
+      '//juyou/multi_media/proto:open_magic_message_thrift',
+      '//juyou/storage/proto:file_transfer_service_thrift',
+      '//juyou/base/base64:ZBase64',
+      '//file:file',
+      '//third_party/tinyxml:tiny_xml',
+      '//libs/third_party/zlib:zlib',
+      '//base:base',
+      ],
+      cflags = [
+      '-std=gnu++0x',
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      ## for Magick++
+      '-fopenmp',
+      '-DMAGICKCORE_HDRI_ENABLE=0',
+      '-DMAGICKCORE_QUANTUM_DEPTH=16',
+      '-I/usr/local/include/ImageMagick-6',
+      ],
+      link_flags = [
+      '/usr/lib/libfreeimage.so',
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      '-luuid',
+      ## for Magick++
+      '-L/usr/local/lib',
+      '-lMagick++-6.Q16',
+      '-lMagickWand-6.Q16',
+      '-lMagickCore-6.Q16',
+      ## for ffmpeg
+      '/usr/local/lib/libavdevice.so',
+      '/usr/local/lib/libavfilter.so',
+      '/usr/local/lib/libavformat.so',
+      '/usr/local/lib/libavcodec.so',
+      '/usr/local/lib/libswresample.so',
+      '/usr/local/lib/libswscale.so',
+      '/usr/local/lib/libavutil.so',
+      # for sox
+      '-lsox',
+      ],
+      copt = [
+      'always_link',
+      ],
+)
+
+cc_test(name = 'open_magic_message_handler_unittest',
+      srcs = [
+      'open_magic_message_handler_unittest.cc',
+      ],
+      deps = [
+      ':open_magic_message_handler',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      ## for Magick++
+      '-fopenmp',
+      '-DMAGICKCORE_HDRI_ENABLE=0',
+      '-DMAGICKCORE_QUANTUM_DEPTH=16',
+      '-I/usr/local/include/ImageMagick-6',
+      ],
+      link_flags = [
+      '/usr/lib/libfreeimage.so',
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      '-luuid',
+      ## for Magick++
+      '-L/usr/local/lib',
+      '-lMagick++-6.Q16',
+      '-lMagickWand-6.Q16',
+      '-lMagickCore-6.Q16',
+      ## for ffmpeg
+      '/usr/local/lib/libavdevice.so',
+      '/usr/local/lib/libavfilter.so',
+      '/usr/local/lib/libavformat.so',
+      '/usr/local/lib/libavcodec.so',
+      '/usr/local/lib/libswresample.so',
+      '/usr/local/lib/libswscale.so',
+      '/usr/local/lib/libavutil.so',
+      # for sox
+      '-lsox',
+      ],
+)
+
+cc_test(name = 'multimedia_transform_unittest',
+      srcs = [
+      'multimedia_transform_unittest.cc',
+      ],
+      deps = [
+      ':multimedia_transform',
+      '//juyou/storage/proto:file_transfer_service_thrift',
+      '//juyou/base/base64:ZBase64',
+      '//file:file',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      ],
+      link_flags = [
+      '/usr/lib/libfreeimage.so',
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      '-luuid',
+      ],
+)
+
+cc_binary(name = 'freeimage_gif_test',
+      srcs = [
+      'freeimage_gif_test.cc',
+      ],
+      deps = [
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      ],
+      link_flags = [
+      '/usr/lib/libfreeimage.so',
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      ],
+)
+
+cc_library(name = 'message_element',
+      srcs = [
+      'message_element.cc',
+      ],
+      deps = [
+      ':zip_gif',
+      ':img_handler',
+      '//juyou/multi_media/gif:gif_decoder',
+      '//juyou/multi_media/msg_action:msg_actions',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      ## for Magick++
+      '-fopenmp',
+      '-DMAGICKCORE_HDRI_ENABLE=0',
+      '-DMAGICKCORE_QUANTUM_DEPTH=16',
+      '-I/usr/local/include/ImageMagick-6',
+      ],
+      link_flags = [
+      '/usr/lib/libfreeimage.so',
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      '-luuid',
+      ## for Magick++
+      '-L/usr/local/lib',
+      '-lMagick++-6.Q16',
+      '-lMagickWand-6.Q16',
+      '-lMagickCore-6.Q16',
+      ],
+)
+
+cc_library(name = 'magic_message_control',
+      srcs = [
+      'magic_message_control.cc',
+      ],
+      deps = [
+      ':handle_element_thread',
+      '//juyou/multi_media/media:multimedia_handler',
+      '//juyou/circles/proto:small_remote_file_server_thrift',
+      '//news_search/base/timer:timer',
+      '//libs/third_party/jsoncpp:jsoncpp',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      ## for Magick++
+      '-fopenmp',
+      '-DMAGICKCORE_HDRI_ENABLE=0',
+      '-DMAGICKCORE_QUANTUM_DEPTH=16',
+      '-I/usr/local/include/ImageMagick-6',
+      ## for ffmpeg
+      '-D__STDC_CONSTANT_MACROS',
+      ],
+      link_flags = [
+      '/usr/lib/libfreeimage.so',
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      '-luuid',
+      ## for Magick++
+      '-L/usr/local/lib',
+      '-lMagick++-6.Q16',
+      '-lMagickWand-6.Q16',
+      '-lMagickCore-6.Q16',
+      ## for ffmpeg
+      '/usr/local/lib/libavdevice.so',
+      '/usr/local/lib/libavfilter.so',
+      '/usr/local/lib/libavformat.so',
+      '/usr/local/lib/libavcodec.so',
+      '/usr/local/lib/libswresample.so',
+      '/usr/local/lib/libswscale.so',
+      '/usr/local/lib/libavutil.so',
+      # for sox
+      '-lsox',
+      ],
+)
+
+cc_test(name = 'magic_message_control_unittest',
+      srcs = [
+      'magic_message_control_unittest.cc',
+      ],
+      deps = [
+      ':magic_message_control',
+      '//file:file',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      ## for Magick++
+      '-fopenmp',
+      '-DMAGICKCORE_HDRI_ENABLE=0',
+      '-DMAGICKCORE_QUANTUM_DEPTH=16',
+      '-I/usr/local/include/ImageMagick-6',
+      ## for ffmpeg
+      '-D__STDC_CONSTANT_MACROS',
+      ],
+      link_flags = [
+      '/usr/lib/libfreeimage.so',
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      '-luuid',
+      ## for Magick++
+      '-L/usr/local/lib',
+      '-lMagick++-6.Q16',
+      '-lMagickWand-6.Q16',
+      '-lMagickCore-6.Q16',
+      ## for ffmpeg
+      '/usr/local/lib/libavdevice.so',
+      '/usr/local/lib/libavfilter.so',
+      '/usr/local/lib/libavformat.so',
+      '/usr/local/lib/libavcodec.so',
+      '/usr/local/lib/libswresample.so',
+      '/usr/local/lib/libswscale.so',
+      '/usr/local/lib/libavutil.so',
+      # for sox
+      '-lsox',
+      ],
+)
+
+cc_library(name = 'zip_gif',
+      srcs = [
+      'zip_gif.cc',
+      ],
+      deps = [
+      ':img_handler',
+      ':multimedia_transform',
+      '//news_search/base/timer:timer',
+      '//third_party/tinyxml:tiny_xml',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      ## for Magick++
+      '-fopenmp',
+      '-DMAGICKCORE_HDRI_ENABLE=0',
+      '-DMAGICKCORE_QUANTUM_DEPTH=16',
+      '-I/usr/local/include/ImageMagick-6',
+      ],
+      link_flags = [
+      '/usr/lib/libfreeimage.so',
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      '-luuid',
+      ## for Magick++
+      '-L/usr/local/lib',
+      '-lMagick++-6.Q16',
+      '-lMagickWand-6.Q16',
+      '-lMagickCore-6.Q16',
+      ],
+)
+
+cc_test(name = 'zip_gif_unittest',
+      srcs = [
+      'zip_gif_unittest.cc',
+      ],
+      deps = [
+      ':zip_gif',
+      '//file:file',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      ## for Magick++
+      '-fopenmp',
+      '-DMAGICKCORE_HDRI_ENABLE=0',
+      '-DMAGICKCORE_QUANTUM_DEPTH=16',
+      '-I/usr/local/include/ImageMagick-6',
+      ],
+      link_flags = [
+      '/usr/lib/libfreeimage.so',
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      '-luuid',
+      ## for Magick++
+      '-L/usr/local/lib',
+      '-lMagick++-6.Q16',
+      '-lMagickWand-6.Q16',
+      '-lMagickCore-6.Q16',
+      ],
+)
+
+cc_library(name = 'handle_element_thread',
+      srcs = [
+      'handle_element_thread.cc',
+      ],
+      deps = [
+      ':message_element',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      ## for Magick++
+      '-fopenmp',
+      '-DMAGICKCORE_HDRI_ENABLE=0',
+      '-DMAGICKCORE_QUANTUM_DEPTH=16',
+      '-I/usr/local/include/ImageMagick-6',
+      ],
+      link_flags = [
+      '-L/usr/X11R6/lib',
+      '-lpthread',
+      '-lX11',
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lm',
+      '-ldl',
+      ## for Magick++
+      '-L/usr/local/lib',
+      '-lMagick++-6.Q16',
+      '-lMagickWand-6.Q16',
+      '-lMagickCore-6.Q16',
+      ],
+)
+
+cc_test(name = 'img_handler_unittest',
+      srcs = [
+      'img_handler_unittest.cc',
+      ],
+      deps = [
+      ':img_handler',
+      ':multimedia_transform',
+      '//file:file',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      '-O',
+      '-w',
+      '-O3',
+      '-fPIC',
+      '-ansi',
+      '-pedantic',
+      '-Dcimg_use_vt100',
+      '-I/usr/X11R6/include',
+      ## for Magick++
+      '-fopenmp',
+      '-DMAGICKCORE_HDRI_ENABLE=0',
+      '-DMAGICKCORE_QUANTUM_DEPTH=16',
+      '-I/usr/local/include/ImageMagick-6',
+      ],
+      link_flags = [
+      '-L/usr/X11R6/lib',
+      '-lX11',
+      '/usr/lib/libfreeimage.so',
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      ## for Magick++
+      '-L/usr/local/lib',
+      '-lMagick++-6.Q16',
+      '-lMagickWand-6.Q16',
+      '-lMagickCore-6.Q16',
+      ],
+)
+
+cc_library(name = 'img_handler',
+      srcs = [
+      'img_handler.cc',
+      ],
+      deps = [
+      '//file:file',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      '-O',
+      '-w',
+      '-O3',
+      '-fPIC',
+      '-ansi',
+      '-pedantic',
+      '-Dcimg_use_vt100',
+      '-I/usr/X11R6/include',
+      ## for Magick++
+      '-fopenmp',
+      '-DMAGICKCORE_HDRI_ENABLE=0',
+      '-DMAGICKCORE_QUANTUM_DEPTH=16',
+      '-I/usr/local/include/ImageMagick-6',
+      ],
+      link_flags = [
+      '-L/usr/X11R6/lib',
+      '-lX11',
+      '/usr/lib/libfreeimage.so',
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      ## for Magick++
+      '-L/usr/local/lib',
+      '-lMagick++-6.Q16',
+      '-lMagickWand-6.Q16',
+      '-lMagickCore-6.Q16',
+      ],
+)

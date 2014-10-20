@@ -1,0 +1,14 @@
+# Copyright 2013. Juyou Inc. All rights reserved
+# Author: wangjuntao@juyou.com (Juntao Wang)
+
+thrift_library(name = 'open_magic_message_thrift',
+      srcs = [
+      'open_magic_message.thrift',
+      ],
+      deps = [
+      '//juyou/circles/proto:common_info_thrift',
+      ],
+      gen_cpp = 1,
+      gen_php = 1,
+)
+

@@ -1,0 +1,14 @@
+
+http://bbs.chinaunix.net/thread-2005749-1-1.html    sox操作
+http://ffmpeg.org/ffmpeg.html                       ffmpeg操作
+
+时间可以是:
+hh:mm:ss[.xxx]
+
+
+
+ffmpeg -ss 5 -i music_1.mp3  -c copy  music_1_post_5.mp3   【mp3 截去前面5秒，取得后面的所有】
+ffmpeg -t 5 -i music_1.mp3  -c copy  music_1_pre_5.mp3   【mp3 截取前面5秒】
+ffmpeg  -ss 5  -i music_1.mp3  -c copy -to 5  music_1_5_to_10.mp3  【mp3截取从第5秒，一共截取5秒钟】
+C:\Program Files\SOX>sox f:\TTT\music_1.mp3 f:\ttt\music_2.mp3 f:\ttt\music_3.mp3 【mp3文件联合，concat】
+C:\Program Files\SOX>sox -m  f:\TTT\music_1.mp3 f:\ttt\music_2.mp3 f:\ttt\music_4.mp3  【mp3 Merge两段mp3为一个音道】

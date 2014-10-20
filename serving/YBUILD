@@ -1,0 +1,88 @@
+# Copyright 2013. Juyou Inc. All rights reserved
+# Author: wangjuntao@juyou.com (Juntao Wang)
+
+cc_binary(name = 'open_magic_message_server',
+      srcs = [
+      'open_magic_message_servlet.cc',
+      'open_magic_message_server.cc',
+      'open_magic_message_server_main.cc',
+      ],
+      deps = [
+      '//juyou/multi_media/proto:open_magic_message_thrift',
+      '//juyou/multi_media/public:open_magic_message_handler',
+      '//news_search/base/json_config:config',
+      '//news_search/base/general_server:general_server',
+      '//util/crypto:base64',
+      '//util/global_init:global_init',
+      '//util/release:release',
+      '//base:base',
+      ],
+      cflags = [
+      '-std=gnu++0x',
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      ## for Magick++
+      '-fopenmp',
+      '-DMAGICKCORE_HDRI_ENABLE=0',
+      '-DMAGICKCORE_QUANTUM_DEPTH=16',
+      '-I/usr/local/include/ImageMagick-6',
+      ],
+      copt = [
+      'always_link',
+      ],
+      link_flags = [
+      '/usr/lib/libfreeimage.so',
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      '-luuid',
+      ## for Magick++
+      #'-L/usr/local/lib',  // result in 'epoll_wait failed:Interrupted system call' !!!!!!!!!!
+      '-lMagick++-6.Q16',
+      '-lMagickWand-6.Q16',
+      '-lMagickCore-6.Q16',
+      ],
+)
+
+cc_test(name = 'open_magic_message_servlet_unittest',
+      srcs = [
+      'open_magic_message_servlet_unittest.cc',
+      ],
+      deps = [
+      '//juyou/multi_media/proto:open_magic_message_thrift',
+      '//util/encode:encoder',
+      '//file:file',
+      '//third_party/tinyxml:tiny_xml',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/opencv',
+      '-I/usr/local/include',
+      ## for Magick++
+      '-fopenmp',
+      '-DMAGICKCORE_HDRI_ENABLE=0',
+      '-DMAGICKCORE_QUANTUM_DEPTH=16',
+      '-I/usr/local/include/ImageMagick-6',
+      ],
+      copt = [
+      'always_link',
+      ],
+      link_flags = [
+      '/usr/lib/libfreeimage.so',
+      '-lopencv_calib3d',
+      '/usr/local/lib/libopencv_*',
+      '-lrt',
+      '-lpthread',
+      '-lm',
+      '-ldl',
+      '-luuid',
+      ## for Magick++
+      #'-L/usr/local/lib',
+      '-lMagick++-6.Q16',
+      '-lMagickWand-6.Q16',
+      '-lMagickCore-6.Q16',
+      ],
+)

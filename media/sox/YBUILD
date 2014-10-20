@@ -1,0 +1,34 @@
+# Copyright 2013. Juyou Inc. All rights reserved
+# Author: wangjuntao@juyou.com (Juntao Wang)
+# from: https://github.com/h2so5/Blowfish
+
+cc_library(name = 'sox_internal',
+      srcs = [
+      'sox.c',
+      ],
+      deps = [
+      ],
+      cflags = [
+      '-O',
+      '-c',
+      '-w',
+      '-O3',
+      ],
+      link_flags = [
+      '-lsox',
+      ],
+)
+
+cc_binary(name = 'example0',
+      srcs = [
+      'example0.c',
+      ],
+      deps = [
+      ],
+      copt = [
+      'always_link',
+      ],
+      link_flags = [
+      '-lsox',
+      ],
+)

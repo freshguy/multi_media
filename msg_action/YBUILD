@@ -1,0 +1,21 @@
+# Copyright 2013. Juyou Inc. All rights reserved
+# Author: wangjuntao@juyou.com (Juntao Wang)
+
+cc_library(name = 'msg_actions',
+      srcs = [
+      'msg_action_play.cc',
+      'msg_action_visibility.cc',
+      'msg_action_rotate.cc',
+      'msg_action_scale.cc',
+      'msg_action_translate.cc',
+      'msg_action_text_animate.cc',
+      ],
+      deps = [
+      '//libs/third_party/jsoncpp:jsoncpp',
+      '//base:base',
+      ],
+      cflags = [
+      ],
+      link_flags = [
+      ],
+)

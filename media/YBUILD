@@ -1,0 +1,121 @@
+# Copyright 2013. Juyou Inc. All rights reserved
+# Author: wangjuntao@juyou.com (Juntao Wang)
+
+cc_library(name = 'ffmpeg_kernel',
+      srcs = [
+      'ffmpeg.c',
+      'ffmpeg_opt.c',
+      'ffmpeg_filter.c',
+      'cmdutils.c',
+      ],
+      deps = [
+      ],
+      cflags = [
+      '-I/usr/local/include/',
+      '-O',
+      '-c',
+      '-w',
+      '-O3',
+      '-fPIC',
+      ],
+      link_flags = [
+      '/usr/local/lib/libavdevice.so',
+      '/usr/local/lib/libavfilter.so',
+      '/usr/local/lib/libavformat.so',
+      '/usr/local/lib/libavcodec.so',
+      '/usr/local/lib/libswresample.so',
+      '/usr/local/lib/libswscale.so',
+      '/usr/local/lib/libavutil.so',
+      ],
+)
+
+cc_library(name = 'multimedia_handler',
+      srcs = [
+      'multimedia_handler.cc',
+      ],
+      deps = [
+      ':ffmpeg_kernel',
+      '//juyou/multi_media/media/sox:sox_internal',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/',
+      '-O',
+      '-c',
+      '-w',
+      '-O3',
+      '-fPIC',
+      # for 'error: 'UINT64_C' was not declared in this scope' in c++
+      '-D__STDC_CONSTANT_MACROS',
+      ],
+      link_flags = [
+      '/usr/local/lib/libavdevice.so',
+      '/usr/local/lib/libavfilter.so',
+      '/usr/local/lib/libavformat.so',
+      '/usr/local/lib/libavcodec.so',
+      '/usr/local/lib/libswresample.so',
+      '/usr/local/lib/libswscale.so',
+      '/usr/local/lib/libavutil.so',
+      # for sox
+      '-lsox',
+      ],
+)
+
+cc_test(name = 'multimedia_handler_unittest',
+      srcs = [
+      'multimedia_handler_unittest.cc',
+      ],
+      deps = [
+      ':multimedia_handler',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/',
+      '-O',
+      '-c',
+      '-w',
+      '-O3',
+      '-fPIC',
+      # for 'error: 'UINT64_C' was not declared in this scope' in c++
+      '-D__STDC_CONSTANT_MACROS',
+      ],
+      link_flags = [
+      '/usr/local/lib/libavdevice.so',
+      '/usr/local/lib/libavfilter.so',
+      '/usr/local/lib/libavformat.so',
+      '/usr/local/lib/libavcodec.so',
+      '/usr/local/lib/libswresample.so',
+      '/usr/local/lib/libswscale.so',
+      '/usr/local/lib/libavutil.so',
+      # for sox
+      '-lsox',
+      ],
+)
+
+cc_binary(name = 'video_decode',
+      srcs = [
+      'video_decode.cc',
+      ],
+      deps = [
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/local/include/',
+      '-O',
+      '-c',
+      '-w',
+      '-O3',
+      '-fPIC',
+      # for 'error: 'UINT64_C' was not declared in this scope' in c++
+      '-D__STDC_CONSTANT_MACROS',
+      ],
+      link_flags = [
+      '/usr/local/lib/libavdevice.so',
+      '/usr/local/lib/libavfilter.so',
+      '/usr/local/lib/libavformat.so',
+      '/usr/local/lib/libavcodec.so',
+      '/usr/local/lib/libswresample.so',
+      '/usr/local/lib/libswscale.so',
+      '/usr/local/lib/libavutil.so',
+      ],
+)
